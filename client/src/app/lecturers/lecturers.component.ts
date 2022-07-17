@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Lecturer } from '../shared/types';
 import { ApiService } from '../core/api.service';
 

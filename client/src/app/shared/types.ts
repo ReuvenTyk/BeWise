@@ -7,3 +7,22 @@ export interface Lecturer {
   start_date: string;
   image: string;
 }
+
+export interface Course {
+  id: number;
+  course_code: string;
+  course_name: string;
+  description: string;
+  price: number;
+  start_date: Date;
+  number_of_classes: number;
+  category: string;
+  lecturer_name: number;
+}
+
+export type sortColumn = 'course_name' | 'price';
+
+export interface courseSort {
+  column: sortColumn;
+  dirAsc: boolean;
+}

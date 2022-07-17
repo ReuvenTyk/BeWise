@@ -1,0 +1,30 @@
+<h1>Courses</h1>
+
+<div class="mx-5 mt-5">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" class="align-middle">
+          Course Name
+          <button (click)="sortCourses('course_name')" class="btn btn-defualt">
+            <i [ngClass]="displaySort('course_name')"></i>
+          </button>
+        </th>
+        <th scope="col" class="align-middle">
+          price
+          <button (click)="sortCourses('price')" class="btn btn-defualt">
+            <i [ngClass]="displaySort('price')"></i>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let course of courses">
+        <td scope="row">({{ course.course_code }}) {{ course.course_name }}</td>
+        <td scope="row">
+          {{ course.price }}<i class="bi-currency-dollar"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
