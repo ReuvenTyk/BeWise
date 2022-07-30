@@ -8,5 +8,7 @@ router.get("/courses", function (req, res, next) {
 });
 
 router.get("/", cm.getCoursesList);
+router.get("/sort", cm.sortCourses);
+router.get("/export", cm.exportCourses);
 
 module.exports = router;

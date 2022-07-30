@@ -17,7 +17,9 @@ export interface Course {
   start_date: Date;
   number_of_classes: number;
   category: string;
-  lecturer_name: number;
+  lecturer: number;
+  first: string;
+  last: string;
 }
 
 export type sortColumn = 'course_name' | 'price';
@@ -25,4 +27,8 @@ export type sortColumn = 'course_name' | 'price';
 export interface courseSort {
   column: sortColumn;
   dirAsc: boolean;
+}
+
+export interface FilePath {
+  name: string;
 }

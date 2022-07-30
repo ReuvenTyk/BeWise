@@ -4,7 +4,7 @@ const fileMgmt = require("../shared/fileMgmt");
 
 module.exports = {
   getLecturersList: async function (req, res, next) {
-    const sql = `SELECT lecturers.first AS "first_name",  lecturers.last AS "last_name", lecturers.email AS email, lecturers.phone AS phone, lecturers.start_date AS "start_date", lecturers.image AS image FROM lecturers`;
+    const sql = `SELECT id, lecturers.first AS "first_name",  lecturers.last AS "last_name", lecturers.email AS email, lecturers.phone AS phone, lecturers.start_date AS "start_date", lecturers.image AS image FROM lecturers`;
 
     try {
       const result = await database.query(sql);

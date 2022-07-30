@@ -22,7 +22,6 @@ export class LecturersComponent implements OnInit {
         this.lecturers = data;
       },
       error: (err) => console.log(err),
-      complete: () => console.log(this.lecturers),
     });
   }
 }

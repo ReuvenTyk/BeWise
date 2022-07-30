@@ -1,16 +1,32 @@
 <h1>Courses</h1>
 
+<!-- <div class="p-2">
+  <label >filter by:</label>
+  <select [(ngModule)]="filter">
+    <option *ngFor="let course of courses" value="course.category">
+      {{ course.category }}
+    </option>
+  </select>
+</div> -->
+
+<div class="p-2">
+  <button (click)="exportCoursesData()" class="btn btn-primary">
+    <i class="bi-download pe-2"></i>
+    Export
+  </button>
+</div>
+
 <div class="mx-5 mt-5">
-  <table class="table table-bordered">
+  <table class="table">
     <thead>
       <tr>
-        <th scope="col" class="align-middle">
+        <th class="align-middle">
           Course Name
           <button (click)="sortCourses('course_name')" class="btn btn-defualt">
             <i [ngClass]="displaySort('course_name')"></i>
           </button>
         </th>
-        <th scope="col" class="align-middle">
+        <th class="align-middle">
           price
           <button (click)="sortCourses('price')" class="btn btn-defualt">
             <i [ngClass]="displaySort('price')"></i>
@@ -18,11 +34,49 @@
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let course of courses">
-        <td scope="row">({{ course.course_code }}) {{ course.course_name }}</td>
-        <td scope="row">
-          {{ course.price }}<i class="bi-currency-dollar"></i>
+    <tbody *ngFor="let course of courses; let i = index">
+      <tr>
+        <td>({{ course.course_code }}) {{ course.course_name }}</td>
+        <td>
+          {{ course.price }}
+          <i class="bi-currency-dollar"></i>
+          <button
+            (click)="
+              clicked
+                ? openToggleDetails(course.course_code, i)
+                : closeToggleDetails(course.course_code, i)
+            "
+            class="btn btn-defualt bi-plus-circle {{ course.course_code }}"
+          ></button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          *ngIf="openDetails(course.course_code)"
+          class="{{ course.course_code }}"
+        >
+          <div>
+            <div>
+              Start Date:
+              {{ course.start_date | date }}
+            </div>
+            <div>
+              Number of classes:
+              {{ course.number_of_classes }}
+            </div>
+            <div>
+              Category:
+              {{ course.category }}
+            </div>
+            <div>
+              Course description:
+              {{ course.description }}
+            </div>
+            <div>
+              Lecturer:
+              {{ course.first }} {{ course.last }}
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>

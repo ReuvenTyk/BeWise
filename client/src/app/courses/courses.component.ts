@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
+import { Component, NgModule, OnInit, Renderer2 } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../core/api.service';
-import { Course, courseSort, sortColumn } from '../shared/types';
+
+import {
+  Course,
+  courseSort,
+  FilePath,
+  Lecturer,
+  sortColumn,
+} from '../shared/types';
 
 @Component({
   selector: 'app-courses',
@@ -13,9 +18,14 @@ import { Course, courseSort, sortColumn } from '../shared/types';
 export class CoursesComponent implements OnInit {
   courses!: Array<Course>;
   tableSort!: courseSort;
-  showDetails = false;
+  lecturers!: Array<Lecturer>;
+  clicked = true;
+  courseCode?: string;
+  openCourse?: number;
+  btn?: Element;
+  filter?: string;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.getCourses();
@@ -59,5 +69,43 @@ export class CoursesComponent implements OnInit {
     } else {
       return 'bi-chevron-expand';
     }
+  }
+
+  openToggleDetails(course_code: string, i: number) {
+    this.courseCode = course_code;
+    this.openCourse = i;
+    this.btn = this.renderer.selectRootElement(`.${course_code}`, true);
+    this.renderer.removeClass(this.btn, 'bi-plus-circle');
+    this.renderer.addClass(this.btn, 'bi-dash-circle');
+    this.clicked = false;
+  }
+
+  closeToggleDetails(course_code: string, i: number) {
+    this.renderer.removeClass(this.btn, 'bi-dash-circle');
+    this.renderer.addClass(this.btn, 'bi-plus-circle');
+    if (i === this.openCourse) {
+      this.clicked = true;
+    } else {
+      this.btn = this.renderer.selectRootElement(`.${course_code}`, true);
+      this.openToggleDetails(course_code, i);
+    }
+  }
+
+  openDetails(course_code: string): boolean {
+    let td = course_code;
+    if (this.courseCode === td && !this.clicked) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  exportCoursesData() {
+    this.apiService.exportCourses().subscribe({
+      next: (data: FilePath) => {
+        window.open(`${environment.serverUrl}/${data.name}`);
+      },
+      error: (err) => console.error(err),
+    });
   }
 }
