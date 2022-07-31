@@ -1,10 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Course } from '../types';
 
 @Pipe({
-  name: 'filter',
+  name: 'filterTable',
 })
-export class FilterPipe implements PipeTransform {
-  transform(value: string): string {
-    return '';
+export class FilterTablePipe implements PipeTransform {
+  transform(courses: Array<Course>, category: string) {
+    return category
+      ? courses.filter((course) => course.category === category)
+      : courses;
   }
 }

@@ -24,6 +24,7 @@ export class CoursesComponent implements OnInit {
   openCourse?: number;
   btn?: Element;
   filter?: string;
+  filterCategory!: string | undefined;
 
   constructor(private apiService: ApiService, private renderer: Renderer2) {}
 
@@ -107,5 +108,19 @@ export class CoursesComponent implements OnInit {
       },
       error: (err) => console.error(err),
     });
+  }
+
+  filterCategoryFunc(cat: string): boolean {
+    const value = this.filterCategory;
+    console.log(value);
+
+    if (!value) {
+      return true;
+    }
+    if (value === cat) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

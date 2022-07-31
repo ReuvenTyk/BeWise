@@ -1,22 +1,24 @@
 <h1>Courses</h1>
+<div class="d-flex flex-row">
+  <div class="m-2">
+    <label class="m-2">filter by Category:</label>
+    <select [(ngModel)]="filterCategory">
+      <option [ngValue]="undefined">All</option>
+      <option *ngFor="let course of courses" [ngValue]="course.category">
+        {{ course.category }}
+      </option>
+    </select>
+  </div>
 
-<!-- <div class="p-2">
-  <label >filter by:</label>
-  <select [(ngModule)]="filter">
-    <option *ngFor="let course of courses" value="course.category">
-      {{ course.category }}
-    </option>
-  </select>
-</div> -->
-
-<div class="p-2">
-  <button (click)="exportCoursesData()" class="btn btn-primary">
-    <i class="bi-download pe-2"></i>
-    Export
-  </button>
+  <div class="m-2">
+    <button (click)="exportCoursesData()" class="btn btn-primary">
+      <i class="bi-download pe-2"></i>
+      Export
+    </button>
+  </div>
 </div>
 
-<div class="mx-5 mt-5">
+<div class="mx-3">
   <table class="table">
     <thead>
       <tr>
@@ -35,7 +37,7 @@
       </tr>
     </thead>
     <tbody *ngFor="let course of courses; let i = index">
-      <tr>
+      <tr *ngIf="filterCategoryFunc(course.category)">
         <td>({{ course.course_code }}) {{ course.course_name }}</td>
         <td>
           {{ course.price }}
